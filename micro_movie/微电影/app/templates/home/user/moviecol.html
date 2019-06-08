@@ -1,0 +1,53 @@
+{% extends "home/base.html" %}
+{% import "ui/admin_page.html" as pg %}
+{% block body %}
+    <div class="container" style="margin-top:76px">
+    <div class="col-md-3">
+        <div class="list-group">
+            <a href="{{ url_for("home.user") }}" class="list-group-item">
+                <span class="glyphicon glyphicon-user"></span>&nbsp;会员中心
+            </a>
+            <a href="{{ url_for("home.pwd") }}" class="list-group-item">
+                <span class="glyphicon glyphicon-lock"></span>&nbsp;修改密码
+            </a>
+            <a href="{{ url_for("home.comment",page=1) }}" class="list-group-item ">
+                <span class="glyphicon glyphicon-comment"></span>&nbsp;评论记录
+            </a>
+            <a href="{{ url_for("home.loginlog",page=1) }}" class="list-group-item">
+                <span class="glyphicon glyphicon-calendar"></span>&nbsp;登录日志
+            </a>
+            <a href="{{ url_for("home.moviecol",page=1) }}" class="list-group-item active">
+                <span class="glyphicon glyphicon-heart"></span>&nbsp;收藏电影
+            </a>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;收藏电影</h3>
+            </div>
+            <div class="panel-body">
+                {% for foo in page.items %}
+                <div class="col-md-12">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="{{ url_for("home.play",page=1,id=foo.movie.id) }}">
+                                <img class="media-object"  style="width: 131px;height: 83px" src="{{ url_for("static",filename="upload/"+foo.movie.logo) }}" alt="环太平洋">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{ foo.movie.title }}<a href="{{ url_for("home.play",id=foo.movie.id,page=1) }}" class="label label-primary pull-right"><span class="glyphicon glyphicon-play"></span>播放影片</a></h4>
+                            {{ foo.movie.info }}
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+                <div class="col-md-12 text-center" style="margin-top:6px;">
+                    {{ pg.page(page,'home.moviecol') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

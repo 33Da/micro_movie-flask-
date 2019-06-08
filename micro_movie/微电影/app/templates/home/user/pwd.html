@@ -1,0 +1,77 @@
+{% extends "home/base.html" %}
+{% block body %}
+    <div class="container" style="margin-top:76px">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="{{ url_for("home.user") }}" class="list-group-item">
+                    <span class="glyphicon glyphicon-user"></span>&nbsp;会员中心
+                </a>
+                <a href="{{ url_for("home.pwd") }}" class="list-group-item active">
+                    <span class="glyphicon glyphicon-lock"></span>&nbsp;修改密码
+                </a>
+                <a href="{{ url_for("home.comment",page=1) }}" class="list-group-item ">
+                    <span class="glyphicon glyphicon-comment"></span>&nbsp;评论记录
+                </a>
+                <a href="{{ url_for("home.loginlog",page=1) }}" class="list-group-item">
+                    <span class="glyphicon glyphicon-calendar"></span>&nbsp;登录日志
+                </a>
+                <a href="{{ url_for("home.moviecol",page=1) }}" class="list-group-item">
+                    <span class="glyphicon glyphicon-heart"></span>&nbsp;收藏电影
+                </a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;会员中心</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" method="post">
+                        {% for msg in get_flashed_messages(category_filter=['ok']) %}
+                            <h4 style="color: #0f9e60">{{ msg }}</h4>
+                        {% endfor %}
+                        {% for msg in get_flashed_messages(category_filter=['err']) %}
+                            <h4 style="color: red"> {{ msg }}</h4>
+                        {% endfor %}
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="input_oldpwd"><span
+                                        class="glyphicon glyphicon-lock"></span>&nbsp;{{ form.pwd.label }}</label>
+                                {{ form.pwd }}
+                                {% for foo in form.pwd.errors %}
+                                    <div class="col-md-12">
+                                        <font style="color: red">{{ foo }}</font>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-12" id="error_oldpwd"></div>
+                            <div class="form-group">
+                                <label for="input_newpwd"><span
+                                        class="glyphicon glyphicon-lock"></span>&nbsp;{{ form.newpwd.label }}</label>
+                                {{ form.newpwd }}
+                                {% for foo in form.newpwd.errors %}
+                                    <div class="col-md-12">
+                                        <font style="color: red">{{ foo }}</font>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                <label for="input_newpwd"><span
+                                        class="glyphicon glyphicon-lock"></span>{{ form.repwd.label }}</label>
+                                {{ form.repwd }}
+                                {% for foo in form.repwd.errors %}
+                                    <div class="col-md-12">
+                                        <font style="color: red">{{ foo }}</font>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-12" id="error_newpwd"></div>
+                            {{ form.csrf_token }}
+                            {{ form.submit }}
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
